@@ -5,7 +5,7 @@ BEGIN
     -- Verificar si el correo electrónico ya está registrado
     SELECT mail_user INTO w_mail
     FROM tab_users
-    WHERE mail_user = w_mail;
+    WHERE mail_user = p_mail;
 
     IF FOUND THEN
         RETURN FALSE; -- El correo ya está en uso
@@ -15,3 +15,5 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+-- SELECT fun_val_mail('admin@mail.com')
+-- SELECT * FROM tab_users

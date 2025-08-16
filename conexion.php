@@ -5,7 +5,7 @@ class Database {
     private string $port = '5432';
     private string $dbname = 'login';
     private string $user = 'postgres';
-    private string $password = 'PgSena2024';
+    private string $password = 'Gerson03#';
     
     private ?PDO $pdo = null; // Conexión PDO (nullable)
     

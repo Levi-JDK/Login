@@ -3,56 +3,107 @@ const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');
 
 signUpButton.addEventListener('click', () => {
-	container.classList.add("right-panel-active");
+    container.classList.add("right-panel-active");
 });
 
 signInButton.addEventListener('click', () => {
-	container.classList.remove("right-panel-active");
+    container.classList.remove("right-panel-active");
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-	const formRegistro = document.getElementById("form-registro");
-	const mensajeAjax = document.getElementById("mensaje-ajax"); // único p dinámico
+    const formRegistro = document.getElementById("form-registro");
+    const formLogin = document.getElementById("form-login");
+    const mensajeAjax = document.getElementById("mensaje-ajax");
+    const mensajeLogin = document.getElementById("mensaje-login");
 
-	if (!formRegistro) {
-		console.error("⚠️ No se encontró el formulario de registro.");
-		return;
-	}
+    // Validación de contraseña en el frontend
+    function validarContrasena(contrasena) {
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(contrasena);
+        const hasLowerCase = /[a-z]/.test(contrasena);
+        const hasNumbers = /\d/.test(contrasena);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(contrasena);
 
-	formRegistro.addEventListener("submit", function (e) {
-		e.preventDefault(); // Evita recarga
-		console.log("✅ Se interceptó el submit del formulario.");
+        if (contrasena.length < minLength) {
+            return "La contraseña debe tener al menos 8 caracteres.";
+        }
+        if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
+            return "La contraseña debe incluir mayúsculas, minúsculas, números y caracteres especiales.";
+        }
+        return "";
+    }
 
-		// Limpiar mensaje previo
-		mensajeAjax.textContent = "";
-		mensajeAjax.className = "";
+    // Registro
+    if (formRegistro) {
+        formRegistro.addEventListener("submit", function (e) {
+            e.preventDefault();
+            mensajeAjax.textContent = "";
+            mensajeAjax.className = "";
 
-		const datos = new FormData(formRegistro);
+            const contrasena = formRegistro.querySelector('input[name="contrasena"]').value;
+            const errorContrasena = validarContrasena(contrasena);
+            if (errorContrasena) {
+                mensajeAjax.textContent = errorContrasena;
+                mensajeAjax.classList.add("mensaje-error");
+                return;
+            }
 
-		fetch("ajax.php", {
-			method: "POST",
-			body: datos
-		})
-			.then(res => res.json())
-			.then(data => {
-				console.log("📩 Respuesta AJAX:", data);
+            const datos = new FormData(formRegistro);
+            datos.append("accion", "registro");
 
-				if (data.mensaje && data.clase) {
-					mensajeAjax.textContent = data.mensaje;
-					mensajeAjax.classList.add(data.clase);
+            fetch("ajax.php", {
+                method: "POST",
+                body: datos
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.mensaje && data.clase) {
+                        mensajeAjax.textContent = data.mensaje;
+                        mensajeAjax.classList.add(data.clase);
+                        if (data.clase === "mensaje-exito") {
+                            formRegistro.reset();
+                        }
+                    }
+                })
+                .catch(err => {
+                    mensajeAjax.textContent = "Error de conexión.";
+                    mensajeAjax.classList.add("mensaje-error");
+                });
+        });
+    }
 
-					if (data.clase === "mensaje-exito") {
-						formRegistro.reset();
-					}
-				} else {
-					mensajeAjax.textContent = "Respuesta inesperada del servidor.";
-					mensajeAjax.classList.add("mensaje-error");
-				}
-			})
-			.catch(err => {
-				console.error("❌ Error AJAX:", err);
-				mensajeAjax.textContent = "Error de conexión.";
-				mensajeAjax.classList.add("mensaje-error");
-			});
-	});
+    // Login
+    if (formLogin) {
+        formLogin.addEventListener("submit", function (e) {
+            e.preventDefault();
+            mensajeLogin.textContent = "";
+            mensajeLogin.className = "";
+
+            const datos = new FormData(formLogin);
+            datos.append("accion", "login");
+
+            fetch("ajax.php", {
+                method: "POST",
+                body: datos
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.mensaje && data.clase) {
+                        mensajeLogin.textContent = data.mensaje;
+                        mensajeLogin.classList.add(data.clase);
+                        if (data.clase === "mensaje-exito") {
+                            formLogin.reset();
+                            // Redirigir a una página después del login exitoso
+                            setTimeout(() => {
+                                window.location.href = "index.html"; 
+                            }, 1000);
+                        }
+                    }
+                })
+                .catch(err => {
+                    mensajeLogin.textContent = "Error de conexión.";
+                    mensajeLogin.classList.add("mensaje-error");
+                });
+        });
+    }
 });
