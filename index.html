@@ -1,0 +1,123 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<title>VIVA - Artesanías Únicas</title>
+</head>
+<body>
+	<header class="header">
+		<div class="header-content">
+			<div class="logo-container">
+				<h1>VIVA</h1>
+			</div>
+			<nav class="nav-principal">
+				<ul>
+					<li><a href="#inicio">Inicio</a></li>
+					<li><a href="#productos">Productos</a></li>
+					<li><a href="#historia">Nuestra Historia</a></li>
+					<li><a href="#contacto">Contacto</a></li>
+					<li><a href="login.php">Iniciar Sesión</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<section id="inicio" class="hero">
+			<div class="hero-content">
+				<h1>Descubre la Magia de VIVA</h1>
+				<p>Artesanías únicas que cuentan historias de tradición y pasión.</p>
+				<a href="login.php" class="cta-button">Explora Ahora</a>
+			</div>
+		</section>
+
+		<section id="productos" class="products">
+			<h2>Nuestros Productos</h2>
+			<div class="product-grid">
+				<div class="product-card">
+					<div class="product-placeholder"></div>
+					<h3>Artesanías de Madera</h3>
+					<p>Piezas talladas a mano con detalles únicos.</p>
+				</div>
+				<div class="product-card">
+					<div class="product-placeholder"></div>
+					<h3>Textiles Tradicionales</h3>
+					<p>Tejidos con técnicas ancestrales.</p>
+				</div>
+				<div class="product-card">
+					<div class="product-placeholder"></div>
+					<h3>Cerámicas Artísticas</h3>
+					<p>Diseños que combinan arte y funcionalidad.</p>
+				</div>
+			</div>
+		</section>
+
+		<section id="historia" class="history">
+			<h2>Nuestra Historia</h2>
+			<p>VIVA nace de la pasión por preservar las tradiciones artesanales. Cada pieza cuenta una historia, conectando el pasado con el presente. Únete a nosotros para celebrar la creatividad y el legado cultural.</p>
+			<a href="login.php" class="cta-button ghost">Únete a VIVA</a>
+		</section>
+
+		<section id="contacto" class="contact">
+			<h2>Contáctanos</h2>
+			<form action="#">
+				<input type="text" placeholder="Nombre" required />
+				<input type="email" placeholder="Email" required />
+				<textarea placeholder="Tu mensaje" required></textarea>
+				<button type="submit">Enviar</button>
+			</form>
+		</section>
+	</main>
+
+	<footer>
+		<p>©2025 VIVA. Todos los derechos reservados.</p>
+		<a href="politica.html">Política de privacidad</a> |
+		<a href="terminos.html">Términos y condiciones</a>
+	</footer>
+</body>
+</html>

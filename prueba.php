@@ -1,10 +1,11 @@
 <?php
 require 'conexion.php'; // Aquí está tu $conn
-
-$sql = "SELECT id_user FROM tab_users";
-$stmt = $conn->query($sql);
+$db = new Database();
+$pdo = $db->getPdo(); // <- Ahora sí tienes un PDO
+$stmt = $pdo->prepare("SELECT mail_user FROM tab_users");
+$stmt->execute();
 
 while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    echo $fila['id_user'] . "\n";
+    echo $fila['mail_user'] . "\n";
 }
 ?>

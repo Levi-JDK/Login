@@ -1,21 +1,29 @@
 <?php
-/*
-==============================================================================
-Este archivo se encarga de conectar a la base de datos y traer un objeto PDO
-============================================================================== */
-$contraseña         = "Gerson03#";
-$usuario            = "postgres";
-$nombreBaseDeDatos  = "db_viva";
-$server = "localhost";
-$puerto = "5432";
-try
-{
-    $conn = new PDO("pgsql:host=$server;port=$puerto;dbname=$nombreBaseDeDatos", $usuario, $contraseña);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-   echo "Me Conecté\n";
+class Database {
+    // Propiedades privadas para la conexión
+    private string $host = 'localhost';
+    private string $port = '5432';
+    private string $dbname = 'login';
+    private string $user = 'postgres';
+    private string $password = 'PgSena2024';
+    
+    private ?PDO $pdo = null; // Conexión PDO (nullable)
+    
+    // Método privado para establecer la conexión
+    private function connect(): void {
+        if ($this->pdo === null) {
+            try
+            {
+                $this->pdo = new PDO("pgsql:host={$this->host};port={$this->port};dbname={$this->dbname}", $this->user, $this->password);
+                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                echo "Error al conectar a la base de datos: " . $e->getMessage();
+            }
+        }
+    }
+    public function getPdo(): PDO {
+    $this->connect(); // Asegura que la conexión esté lista
+    return $this->pdo; // Retorna el objeto PDO
 }
 
-catch (Exception $e)
-{
-    echo "Ocurrió un error con la base de datos: " . $e->getMessage();
-}
+}     
