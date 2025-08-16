@@ -25,5 +25,5 @@ class Database {
     $this->connect(); // Asegura que la conexión esté lista
     return $this->pdo; // Retorna el objeto PDO
 }
-
 }     
+?>

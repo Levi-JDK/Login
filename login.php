@@ -1,41 +1,3 @@
-<?php
-require_once('conexion.php');
-$db = new Database();
-$pdo = $db->getPdo();
-$error = "";
-$registro_exitoso = false;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['contrasena'], $_POST['nombre'], $_POST['apellido'])) {
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $email = $_POST['email'];
-    $contrasena = password_hash($_POST['contrasena'], PASSWORD_ARGON2ID);
-
-    try {
-        $sqlcheck = "SELECT fun_val_mail(:email)";
-        $stmtcheck = $pdo->prepare($sqlcheck);
-        $stmtcheck->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmtcheck->execute();
-        $result = $stmtcheck->fetchColumn();
-
-        if (!$result) {
-            $error = "El correo ya está registrado.";
-        } else {
-            $sql = "SELECT fun_reg_user(:email, :contrasena, :nombre, :apellido)";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            $stmt->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
-            $stmt->bindParam(':apellido', $apellido, PDO::PARAM_STR);
-            $stmt->execute();
-
-            $registro_exitoso = true;
-        }
-    } catch (PDOException $e) {
-        $error = "Correo en uso";
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,24 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['cont
 	<div class="center">
 		<div class="container" id="container">
 			<div class="form-container sign-up-container">
-				<form action="login.php" method="POST">
-					<h1>Crear Cuenta</h1>
-					<div class="social-container">
-						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-					</div>
-					<span>o usa tu correo para registrarte</span>
-					<input type="text" name="nombre" placeholder="Nombre" required />
-					<input type="text" name="apellido" placeholder="Apellido" required />
-					<input type="email" name="email" placeholder="Email" required />
-					<input type="password" name="contrasena" placeholder="Contraseña" required />
-					<?php if ($error): ?>
-						<p id="p_error" class="mensaje-error">Correo electrónico en uso.</p>
-					<?php elseif ($registro_exitoso): ?>
-						<p id="p_exito" class="mensaje-exito">¡Registro exitoso! Ahora puedes iniciar sesión.</p>
-					<?php endif; ?>
-					<button type="submit">Registrarse</button>
-				</form>
+				<form id="form-registro" method="POST">
+    <h1>Crear Cuenta</h1>
+    <input type="text" name="nombre" placeholder="Nombre" required />
+    <input type="text" name="apellido" placeholder="Apellido" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="contrasena" placeholder="Contraseña" required />
+    <p id="mensaje-ajax"></p>
+    <button type="submit">Registrarse</button>
+</form>
+
 			</div>
 			<div class="form-container sign-in-container">
 				<form action="#">
