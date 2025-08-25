@@ -3,9 +3,9 @@ class Database {
     // Propiedades privadas para la conexión
     private string $host = 'localhost';
     private string $port = '5432';
-    private string $dbname = 'login';
-    private string $user = 'postgres';
-    private string $password = 'Gerson03#';
+    private string $dbname = 'db_viva';
+    private string $user = 'artesanias_user';
+    private string $password = 'secure_password_2025';
     
     private ?PDO $pdo = null; // Conexión PDO (nullable)
     

@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['email'] = $email;
 
                 // Consulta adicional para obtener el nombre
-                $sqlNombre = "SELECT nom_cliente FROM tab_users WHERE mail_user = :email";
+                $sqlNombre = "SELECT nom_user FROM tab_users WHERE mail_user = :email";
                 $stmtNombre = $pdo->prepare($sqlNombre);
                 $stmtNombre->bindParam(':email', $email, PDO::PARAM_STR);
                 $stmtNombre->execute();

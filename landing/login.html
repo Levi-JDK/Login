@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIVA | Iniciar Sesión - Artesanías Colombianas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login_styles.css">
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center">
+                        <img src="media/Logo-Photoroom.png" alt="">
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-tierra-oscuro">VIVA</h1>
+                        <p class="text-xs text-tierra-medio">Artesanías Colombianas</p>
+                    </div>
+                </div>
+                
+                <!-- Back to Home -->
+                <a href="index.html" class="text-tierra-medio hover:text-naranja-artesanal transition-colors duration-300 font-medium">
+                    <i class="fas fa-arrow-left mr-2"></i>Volver al inicio
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-wrapper">
+        <div class="w-full max-w-6xl mx-auto pt-20 pb-20 px-4 min-h-screen flex items-center justify-center">
+            <div class="auth-container bg-white/95 rounded-3xl shadow-2xl overflow-hidden min-h-[600px] relative w-full">
+                <!-- Login Form -->
+                <div id="loginForm" class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] form-transition">
+                    <!-- Form Section -->
+                    <div class="p-8 lg:p-12 flex flex-col justify-center">
+                        <div class="max-w-sm mx-auto w-full fade-in">
+                            <div class="text-center mb-8">
+                                <h2 class="text-3xl font-bold text-tierra-oscuro mb-2">¡Bienvenido de vuelta!</h2>
+                                <p class="text-gray-600">Inicia sesión para continuar tu experiencia</p>
+                            </div>
+
+                            <form id="form-login" class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                    <input 
+                                        type="email" 
+                                        name="email" 
+                                        placeholder="tu@email.com"
+                                        required 
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl input-focus focus:outline-none transition-all duration-300"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                                    <div class="relative">
+                                        <input 
+                                            type="password" 
+                                            name="contrasena" 
+                                            placeholder="••••••••"
+                                            required 
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl input-focus focus:outline-none transition-all duration-300 pr-12"
+                                        />
+                                        <button type="button" class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="rounded border-gray-300 text-tierra-medio focus:ring-tierra-medio">
+                                        <span class="ml-2 text-sm text-gray-600">Recordarme</span>
+                                    </label>
+                                    <a href="#" class="text-sm text-tierra-medio hover:text-naranja-artesanal transition-colors">
+                                        ¿Olvidaste tu contraseña?
+                                    </a>
+                                </div>
+
+                                <button 
+                                    type="submit" 
+                                    class="w-full btn-primary text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300"
+                                >
+                                    Iniciar Sesión
+                                </button>
+
+                                <div id="mensaje-login" class="hidden text-sm text-center py-2 px-4 rounded-lg border"></div>
+                            </form>
+
+                            <!-- Social Login -->
+                            <div class="mt-8">
+                                <div class="relative">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="w-full border-t border-gray-300"></div>
+                                    </div>
+                                    <div class="relative flex justify-center text-sm">
+                                        <span class="px-4 bg-white text-gray-500">O continúa con</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full mt-4 social-btn bg-white border border-gray-300 py-3 px-4 rounded-xl font-medium text-gray-700 flex items-center justify-center space-x-3">
+                                    <i class="fab fa-google text-red-500"></i>
+                                    <span>Continuar con Google</span>
+                                </button>
+                            </div>
+
+                            <!-- Switch to Register -->
+                            <div class="text-center mt-8">
+                                <p class="text-gray-600">
+                                    ¿No tienes cuenta? 
+                                    <button 
+                                        id="showRegister" 
+                                        class="text-tierra-medio hover:text-naranja-artesanal font-semibold transition-colors"
+                                    >
+                                        Regístrate aquí
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Section -->
+                    <div class="bg-gradient-to-br from-tierra-claro via-beige-suave to-verde-artesanal lg:flex items-center justify-center p-8 hidden">
+                        <div class="text-center text-tierra-oscuro">
+                            <i class="fas fa-heart text-6xl mb-6 opacity-20"></i>
+                            <h3 class="text-2xl font-bold mb-4">Conecta con nuestras raíces</h3>
+                            <p class="text-lg opacity-80 max-w-sm">
+                                Apoya a los artesanos indígenas y preserva las tradiciones milenarias de Colombia
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] form-transition inset-0 hidden">
+                    <!-- Image Section -->
+                    <div class="bg-gradient-to-br from-verde-artesanal via-tierra-claro to-naranja-artesanal lg:flex items-center justify-center p-8 hidden">
+                        <div class="text-center text-white">
+                            <i class="fas fa-users text-6xl mb-6 opacity-20"></i>
+                            <h3 class="text-2xl font-bold mb-4">¡Únete a nuestra comunidad!</h3>
+                            <p class="text-lg opacity-90 max-w-sm">
+                                Descubre artesanías únicas y apoya directamente a las comunidades colombianas
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Form Section -->
+                    <div class="p-4 lg:p-6 flex flex-col justify-center h-full">
+                        <div class="max-w-lg mx-auto w-full">
+                            <div class="text-center mb-8">
+                                <h2 class="text-3xl font-bold text-tierra-oscuro mb-2">Crear cuenta</h2>
+                                <p class="text-gray-600">Únete y conecta con nuestras raíces</p>
+                            </div>
+
+                            <form id="form-registro" class="space-y-6">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                                        <input 
+                                            type="text" 
+                                            name="nombre" 
+                                            placeholder="Tu nombre"
+                                            required 
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl input-focus focus:outline-none transition-all duration-300"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Apellido</label>
+                                        <input 
+                                            type="text" 
+                                            name="apellido" 
+                                            placeholder="Tu apellido"
+                                            required 
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl input-focus focus:outline-none transition-all duration-300"
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                    <input 
+                                        type="email" 
+                                        name="email" 
+                                        placeholder="tu@email.com"
+                                        required 
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl input-focus focus:outline-none transition-all duration-300"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                                    <div class="relative">
+                                        <input 
+                                            type="password" 
+                                            name="contrasena" 
+                                            placeholder="••••••••"
+                                            required 
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl input-focus focus:outline-none transition-all duration-300 pr-12"
+                                        />
+                                        <button type="button" class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        Mín. 8 caracteres con mayúsculas, minúsculas, números y símbolos
+                                    </p>
+                                </div> 
+                                <button 
+                                    type="submit" 
+                                    class="w-full btn-primary text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300"
+                                >
+                                    Crear cuenta
+                                </button>
+
+                                <div id="mensaje-ajax" class="hidden text-sm text-center py-2 px-4 rounded-lg border"></div>
+                            </form>
+
+                            <!-- Social Register -->
+                            <div class="mt-8">
+                                <div class="relative">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="w-full border-t border-gray-300"></div>
+                                    </div>
+                                    <div class="relative flex justify-center text-sm">
+                                        <span class="px-4 bg-white text-gray-500">O regístrate con</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full mt-4 social-btn bg-white border border-gray-300 py-3 px-4 rounded-xl font-medium text-gray-700 flex items-center justify-center space-x-3">
+                                    <i class="fab fa-google text-red-500"></i>
+                                    <span>Continuar con Google</span>
+                                </button>
+                            </div>
+
+                            <!-- Switch to Login -->
+                            <div class="text-center mt-8">
+                                <p class="text-gray-600">
+                                    ¿Tienes cuenta? 
+                                    <button id="showLogin" class="text-tierra-medio hover:text-naranja-artesanal font-semibold transition-colors">
+                                        Inicia Sesión
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900/90 backdrop-blur-md text-white py-4 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm opacity-80">
+                © 2025 VIVA Artesanías Colombianas. Todos los derechos reservados.
+                <a href="politica.html" class="hover:text-tierra-claro ml-2">Política de privacidad</a> |
+                <a href="terminos.html" class="hover:text-tierra-claro ml-2">Términos</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="login_script.js"></script>
+</body>
+</html>

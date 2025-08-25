@@ -1,8 +1,8 @@
 CREATE OR REPLACE FUNCTION fun_reg_user(
     p_mail_user VARCHAR,
     p_pass_user VARCHAR,
-    p_nom_cliente VARCHAR,
-    p_ape_cliente VARCHAR
+    p_nom_user  VARCHAR,
+    p_ape_user  VARCHAR
 ) RETURNS BOOLEAN AS $$
 DECLARE
     w_mail_user tab_users.mail_user%TYPE;
@@ -17,8 +17,8 @@ BEGIN
     END IF;
 
     -- Insertar el nuevo usuario
-    INSERT INTO tab_users (id_user, pass_user, mail_user, nom_cliente, ape_cliente)
-    VALUES ((SELECT MAX(id_user) FROM tab_users)+1, p_pass_user, p_mail_user, p_nom_cliente, p_ape_cliente);
+    INSERT INTO tab_users (id_user, pass_user, mail_user, nom_user, ape_user)
+    VALUES ((SELECT MAX(id_user) FROM tab_users)+1, p_pass_user, p_mail_user, p_nom_user, p_ape_user);
     RETURN TRUE;
 END;
 $$ LANGUAGE plpgsql;

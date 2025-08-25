@@ -1,0 +1,217 @@
+:root {
+    --tierra-oscuro: #8B4513;
+    --tierra-medio: #CD853F;
+    --tierra-claro: #DEB887;
+    --verde-artesanal: #6B8E23;
+    --naranja-artesanal: #D2691E;
+    --beige-suave: #F5F5DC;
+}
+
+/* Color utilities */
+.text-tierra-oscuro { color: var(--tierra-oscuro); }
+.text-tierra-medio { color: var(--tierra-medio); }
+.text-verde-artesanal { color: var(--verde-artesanal); }
+.text-naranja-artesanal { color: var(--naranja-artesanal); }
+.hover\:text-naranja-artesanal:hover { color: var(--naranja-artesanal); }
+.hover\:text-tierra-claro:hover { color: var(--tierra-claro); }
+
+.bg-tierra-oscuro { background-color: var(--tierra-oscuro); }
+.bg-tierra-medio { background-color: var(--tierra-medio); }
+.bg-tierra-claro { background-color: var(--tierra-claro); }
+.bg-verde-artesanal { background-color: var(--verde-artesanal); }
+.bg-naranja-artesanal { background-color: var(--naranja-artesanal); }
+.bg-beige-suave { background-color: var(--beige-suave); }
+
+/* Gradient colors */
+.from-tierra-claro { --tw-gradient-from: var(--tierra-claro); }
+.via-beige-suave { --tw-gradient-via: var(--beige-suave); }
+.to-verde-artesanal { --tw-gradient-to: var(--verde-artesanal); }
+.from-verde-artesanal { --tw-gradient-from: var(--verde-artesanal); }
+.via-tierra-claro { --tw-gradient-via: var(--tierra-claro); }
+.to-naranja-artesanal { --tw-gradient-to: var(--naranja-artesanal); }
+
+/* Base styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-image: url("media/artesanias.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Main wrapper */
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Auth container */
+.auth-container {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Form transitions */
+.form-transition {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-enter {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.slide-exit {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+/* Register form initial positioning */
+#registerForm {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+#registerForm.active {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Button styles */
+.btn-primary {
+    background: linear-gradient(135deg, var(--naranja-artesanal), var(--tierra-medio));
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--tierra-medio), var(--tierra-oscuro));
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(210, 105, 30, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Input styles */
+.input-focus:focus {
+    border-color: var(--tierra-medio);
+    box-shadow: 0 0 0 3px rgba(205, 133, 63, 0.1);
+}
+
+/* Social button */
+.social-btn {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.social-btn:hover {
+    background: var(--beige-suave);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Message styles */
+.message-success {
+    color: var(--verde-artesanal);
+    background-color: rgba(107, 142, 35, 0.1);
+    border-color: var(--verde-artesanal);
+}
+
+.message-error {
+    color: #dc2626;
+    background-color: rgba(220, 38, 38, 0.1);
+    border-color: #dc2626;
+}
+
+/* Password toggle */
+.password-toggle {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: var(--tierra-medio) !important;
+}
+
+/* Focus ring for checkbox */
+input[type="checkbox"]:focus {
+    --tw-ring-color: var(--tierra-medio);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+    
+    .auth-container {
+        margin: 1rem;
+        min-height: calc(100vh - 140px);
+    }
+    
+    .main-wrapper {
+        padding: 1rem 0;
+        align-items: flex-start;
+        padding-top: 100px;
+    }
+    
+    #loginForm,
+    #registerForm {
+        min-height: auto;
+    }
+    
+    .p-8 {
+        padding: 1.5rem;
+    }
+    
+    .lg\:p-12 {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .auth-container {
+        border-radius: 1rem;
+    }
+}
+
+/* Prevent content overflow */
+.container {
+    max-width: 100%;
+    overflow: hidden;
+}
